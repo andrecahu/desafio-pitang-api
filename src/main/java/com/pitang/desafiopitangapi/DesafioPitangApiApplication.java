@@ -3,7 +3,7 @@ package com.pitang.desafiopitangapi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.pitang.desafiopitangapi")
 public class DesafioPitangApiApplication {
 
     public static void main(String[] args) {
