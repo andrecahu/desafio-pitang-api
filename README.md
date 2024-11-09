@@ -27,7 +27,7 @@ Este projeto é uma API RESTful desenvolvida para o Desafio Pitang, que permite 
 
 1. **Clone o repositório**:
     ```bash
-    git clone PROJETO
+    git clone git@github.com:andrecahu/desafio-pitang-api.git
     ```
 
 2. **Acesse o diretório do projeto**:

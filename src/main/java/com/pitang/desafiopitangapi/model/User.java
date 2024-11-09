@@ -1,8 +1,10 @@
 package com.pitang.desafiopitangapi.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.pitang.desafiopitangapi.exceptions.BusinessException;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -19,7 +21,7 @@ public class User {
     private String id;
 
     @Column(name = "FIRST_NAME", nullable = false)
-    private String firtName;
+    private String firstName;
 
     @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
@@ -48,4 +50,30 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<Car> cars;
+
+    public void validate(){
+        if(firstName == null || firstName.isEmpty())
+            throw new BusinessException("“Missing fields", HttpStatus.BAD_REQUEST);
+        if(lastName == null || lastName.isEmpty())
+            throw new BusinessException("“Missing fields", HttpStatus.BAD_REQUEST);
+        if(email == null || email.isEmpty())
+            throw new BusinessException("“Missing fields", HttpStatus.BAD_REQUEST);
+        if(birthday == null)
+            throw new BusinessException("“Missing fields", HttpStatus.BAD_REQUEST);
+        if(login == null || login.isEmpty())
+            throw new BusinessException("“Missing fields", HttpStatus.BAD_REQUEST);
+        if(password == null || password.isEmpty())
+            throw new BusinessException("“Missing fields", HttpStatus.BAD_REQUEST);
+        if(phone == null || phone.isEmpty())
+            throw new BusinessException("“Missing fields", HttpStatus.BAD_REQUEST);
+
+        if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"))
+            throw new BusinessException("Invalid fields", HttpStatus.BAD_REQUEST);
+
+        String regex = "^(\\+\\d{1,2}\\s?)?\\(?\\d{2,3}\\)?\\s?-?\\d{4,5}-?\\d{4}$|^\\d{8,9}$";
+
+        if (!phone.matches(regex)) {
+            throw new BusinessException("Invalid fields", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

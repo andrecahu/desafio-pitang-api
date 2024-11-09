@@ -29,7 +29,7 @@ public class AuthController {
         User user = userRepository.findByLogin(body.login()).orElseThrow(() -> new BadCredentialsException("Invalid login or password"));
         if (passwordEncoder.matches(body.password(), user.getPassword())){
             String token = tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getFirtName(), token));
+            return ResponseEntity.ok(new ResponseDTO(user.getFirstName(), token));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login or password");
     }
