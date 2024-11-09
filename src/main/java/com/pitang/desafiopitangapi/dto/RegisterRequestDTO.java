@@ -32,7 +32,7 @@ public class RegisterRequestDTO {
     public static User toEntity(RegisterRequestDTO dto){
         User user = new User();
         user.setId(dto.getId());
-        user.setFirtName(dto.getFirstName());
+        user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
         user.setBirthday(dto.getBirthday());

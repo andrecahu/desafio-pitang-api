@@ -38,6 +38,10 @@ public class UserService {
             throw new BusinessException("Email already exists", HttpStatus.BAD_REQUEST);
         }
         User newUser = RegisterRequestDTO.toEntity(registerRequestDTO);
+        newUser.validate();
+        if(newUser.getCars() != null)
+            carService.validateCarList(newUser.getCars());
+
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         this.userRepository.save(newUser);
 
@@ -48,7 +52,7 @@ public class UserService {
             }
         }
         String token = tokenService.generateToken(newUser);
-        return new ResponseDTO(newUser.getFirtName(), token);
+        return new ResponseDTO(newUser.getFirstName(), token);
     }
 
 }
