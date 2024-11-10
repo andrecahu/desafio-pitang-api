@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.pitang.desafiopitangapi.dto.ResponseDTO;
 import com.pitang.desafiopitangapi.exceptions.BusinessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<ResponseDTO> register(@RequestBody UserDTO body) throws BusinessException {
-        return ResponseEntity.ok(userService.register(body));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(body));
     }
 
     @GetMapping
@@ -36,5 +37,11 @@ public class UserController {
     @PutMapping("{id}")
     public ResponseEntity<UserDTO> update(@PathVariable String id, @RequestBody UserDTO userDTO) throws BusinessException {
         return ResponseEntity.ok(userService.update(id, userDTO));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

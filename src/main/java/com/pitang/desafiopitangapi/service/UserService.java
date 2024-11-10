@@ -102,4 +102,14 @@ public class UserService {
         userRepository.save(newuser);
         return User.toDTO(user);
     }
+
+    public void delete(String id){
+        User user = userRepository.findById(id).orElseThrow(() -> new BadCredentialsException("Invalid Id"));
+        if (user.getCars()!=null){
+            for(Car car: user.getCars()){
+                carService.deleteByCar(car);
+            }
+        }
+        userRepository.delete(user);
+    }
 }
