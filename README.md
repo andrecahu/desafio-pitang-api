@@ -116,16 +116,7 @@ Este projeto é uma API RESTful desenvolvida para o Desafio Pitang, que permite 
           "email": "hello@world.com",
           "birthday": "1990-05-01",
           "login": "hello.world",
-          "password": "h3ll0",
-          "phone": "988888888",
-          "cars": [
-             {
-             "year": 2018,
-             "licensePlate": "PDV-0625",
-             "model": "Audi",
-             "color": "White"
-             }
-          ]
+          "phone": "988888888"
         }
         ```
 - **❌ DELETE <ins>/api/users/{id}**: Deleta um usuário específico.

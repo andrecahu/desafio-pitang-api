@@ -69,4 +69,25 @@ public class UserService {
         return User.toDTO(user);
     }
 
+    public UserDTO update(String id, UserDTO userDTO){
+        User user = findById(id);
+        User newuser = UserDTO.toEntity(userDTO);
+        if(newuser.getId() == null)
+            newuser.setId(id);
+        if(newuser.getPassword() == null)
+            newuser.setPassword(user.getPassword());
+        if (user.getCars() != null)
+            newuser.setCars(user.getCars());
+        newuser.setCreatedAt(user.getCreatedAt());
+        newuser.setLastLogin(user.getLastLogin());
+
+        newuser.validate();
+        userRepository.save(newuser);
+        return User.toDTO(user);
+    }
+
+    public User findById(String id){
+        return userRepository.findById(id).orElseThrow(() -> new BadCredentialsException("Invalid id"));
+    }
+
 }
