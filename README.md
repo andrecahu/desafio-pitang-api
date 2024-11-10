@@ -61,8 +61,8 @@ Este projeto é uma API RESTful desenvolvida para o Desafio Pitang, que permite 
 ### 2. **Gerenciamento de Carros** 🚗
 
 - **<ins>2.1. Registrar Carro no Perfil**: Como usuário autenticado, quero registrar um carro no meu perfil para ter os dados do meu veículo associados a mim.
-- **<ins>2.2. Visualizar Carros**: Como usuário autenticado, quero poder listar: todos os carros, apenas os meus carros e visualizar as informações de um deles para ter completas sobre ele.
-- **<ins>2.3. Atualizar um Carro**: Como usuário autenticado, quero atualizar as informações de um carro para manter o carro sempre atualizado.
+- **<ins>2.2. Visualizar Carros**: Como usuário autenticado, quero poder listar os meus carros e visualizar as informações de um deles para ter completas sobre ele.
+- **<ins>2.3. Atualizar um Carro**: Como usuário autenticado, quero atualizar as informações de um carro meu para manter o carro sempre atualizado.
 - **<ins>2.4. Remover Carro do Perfil**: Como usuário autenticado, quero remover um carro específico do meu perfil para que minhas informações de veículos estejam sempre atualizadas.
 
 
