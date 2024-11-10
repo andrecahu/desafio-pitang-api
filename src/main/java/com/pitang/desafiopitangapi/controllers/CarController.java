@@ -34,8 +34,8 @@ public class CarController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Car> update(@RequestBody Car car, HttpServletRequest request) throws BusinessException {
-        return ResponseEntity.ok(carService.update(car, request));
+    public ResponseEntity<Car> update(@PathVariable String id, @RequestBody Car car, HttpServletRequest request) throws BusinessException {
+        return ResponseEntity.ok(carService.update(id, car, request));
     }
 
     @DeleteMapping("{id}")

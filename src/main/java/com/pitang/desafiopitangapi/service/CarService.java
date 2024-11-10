@@ -49,7 +49,8 @@ public class CarService {
         return carRepository.findByIdAndUserId(id, user.getId()).orElseThrow(()-> new EntityNotFoundException("Car Not Found"));
     }
 
-    public Car update(Car car, HttpServletRequest request) {
+    public Car update(String id, Car car, HttpServletRequest request) {
+        car.setId(id);
         car.validate();
         User user = getUserByToken(request);
         car.setUser(user);
