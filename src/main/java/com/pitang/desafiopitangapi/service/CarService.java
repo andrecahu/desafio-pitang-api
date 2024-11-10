@@ -49,14 +49,30 @@ public class CarService {
         return carRepository.findByIdAndUserId(id, user.getId()).orElseThrow(()-> new EntityNotFoundException("Car Not Found"));
     }
 
-    public void validateCarList(List<Car> list) {
-        for (Car car : list) {
-            car.validate();
+    public Car update(Car car, HttpServletRequest request) {
+        car.validate();
+        User user = getUserByToken(request);
+        car.setUser(user);
+
+        for(Car validationCar : user.getCars()){
+            if(validationCar.getId().equals(car.getId())){
+                if (!validationCar.getLicensePlate().equals(car.getLicensePlate()) && carRepository.existsByLicensePlate(car.getLicensePlate())) {
+                    throw new BusinessException("License plate already exists", HttpStatus.BAD_REQUEST);
+                }
+                return carRepository.save(car);
+            }
         }
+        throw new EntityNotFoundException("Car Not Found");
     }
 
     public void deleteByCar(Car car) {
         carRepository.delete(car);
+    }
+
+    public void validateCarList(List<Car> list) {
+        for (Car car : list) {
+            car.validate();
+        }
     }
 
     public User getUserByToken(HttpServletRequest request){
