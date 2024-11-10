@@ -52,7 +52,7 @@ public class UserService {
         if(newUser.getCars() != null){
             for(Car car: newUser.getCars()){
                 car.setUser(newUser);
-                carService.register(car);
+                carService.register(car, null);
             }
         }
         String token = tokenService.generateToken(newUser);
@@ -82,8 +82,12 @@ public class UserService {
     public UserDTO findByMe(HttpServletRequest request){
         var token = tokenService.recoverToken(request);
         var login = tokenService.verifyToken(token);
-        User user = userRepository.findByLogin(login).orElseThrow(() -> new BadCredentialsException("Invalid login"));
+        User user = findByLogin(login);
         return User.toDTO(user);
+    }
+
+    public User findByLogin(String login){
+        return userRepository.findByLogin(login).orElseThrow(() -> new BadCredentialsException("Invalid login"));
     }
 
     public UserDTO update(String id, UserDTO userDTO){
