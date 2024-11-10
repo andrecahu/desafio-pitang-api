@@ -1,5 +1,6 @@
 package com.pitang.desafiopitangapi.controllers;
 
+import com.pitang.desafiopitangapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import com.pitang.desafiopitangapi.dto.LoginRequestDTO;
 import com.pitang.desafiopitangapi.dto.ResponseDTO;
@@ -23,12 +24,14 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
+    private final UserService userService;
 
     @PostMapping()
     public ResponseEntity signIn(@RequestBody LoginRequestDTO body) {
         User user = userRepository.findByLogin(body.login()).orElseThrow(() -> new BadCredentialsException("Invalid login or password"));
         if (passwordEncoder.matches(body.password(), user.getPassword())){
             String token = tokenService.generateToken(user);
+            userService.updateLastLogin(user);
             return ResponseEntity.ok(new ResponseDTO(user.getFirstName(), token));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login or password");

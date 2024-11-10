@@ -1,6 +1,6 @@
 package com.pitang.desafiopitangapi.controllers;
 
-import com.pitang.desafiopitangapi.dto.RegisterRequestDTO;
+import com.pitang.desafiopitangapi.dto.UserDTO;
 import com.pitang.desafiopitangapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> register(@RequestBody RegisterRequestDTO body) throws BusinessException {
+    public ResponseEntity<ResponseDTO> register(@RequestBody UserDTO body) throws BusinessException {
         return ResponseEntity.ok(userService.register(body));
     }
 }
