@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -60,6 +62,15 @@ public class UserService {
     public void updateLastLogin(User user){
         user.setLastLogin(LocalDateTime.now());
         userRepository.save(user);
+    }
+
+    public List<UserDTO> findAll() {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for(User user: users){
+            userDTOs.add(User.toDTO(user));
+        }
+        return userDTOs;
     }
 
     public UserDTO findByMe(HttpServletRequest request){
