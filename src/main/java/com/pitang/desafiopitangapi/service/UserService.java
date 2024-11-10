@@ -83,7 +83,9 @@ public class UserService {
         var token = tokenService.recoverToken(request);
         var login = tokenService.verifyToken(token);
         User user = findByLogin(login);
-        return User.toDTO(user);
+        UserDTO userDTO = User.toDTO(user);
+        userDTO.setCars(user.getCars());
+        return userDTO;
     }
 
     public User findByLogin(String login){

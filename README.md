@@ -110,7 +110,6 @@ Este projeto é uma API RESTful desenvolvida para o Desafio Pitang, que permite 
     - **Body**:
         ```json
         {
-          "id": "id-gerado-automaticamente",
           "firstName": "Hello",
           "lastName": "World",
           "email": "hello@world.com",
@@ -140,7 +139,6 @@ Este projeto é uma API RESTful desenvolvida para o Desafio Pitang, que permite 
     - **Body**:
         ```json
         {
-        "id": "id-gerado-automaticamente",
         "year": 2018,
         "licensePlate": "PDV-0625",
         "model": "Audi",

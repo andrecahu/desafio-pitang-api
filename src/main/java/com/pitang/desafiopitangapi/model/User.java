@@ -89,7 +89,6 @@ public class User {
         userDTO.setPhone(user.getPhone());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setLastLogin(user.getLastLogin());
-        userDTO.setCars(user.getCars());
         return userDTO;
     }
 }
