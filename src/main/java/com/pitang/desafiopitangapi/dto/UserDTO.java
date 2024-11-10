@@ -40,7 +40,12 @@ public class UserDTO {
         user.setLogin(dto.getLogin());
         user.setPassword(dto.getPassword());
         user.setPhone(dto.getPhone());
-        user.setCreatedAt(LocalDateTime.now());
+        if (dto.getCreatedAt() == null)
+            user.setCreatedAt(LocalDateTime.now());
+        else
+            user.setCreatedAt(dto.getCreatedAt());
+        if (dto.getLastLogin() != null)
+            user.setLastLogin(dto.getLastLogin());
         user.setCars(dto.getCars());
         return user;
     }

@@ -20,4 +20,9 @@ public class UserController {
     public ResponseEntity<ResponseDTO> register(@RequestBody UserDTO body) throws BusinessException {
         return ResponseEntity.ok(userService.register(body));
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable String id, @RequestBody UserDTO userDTO) throws BusinessException {
+        return ResponseEntity.ok(userService.update(id, userDTO));
+    }
 }
