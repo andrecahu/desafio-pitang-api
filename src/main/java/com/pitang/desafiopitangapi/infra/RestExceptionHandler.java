@@ -1,5 +1,6 @@
 package com.pitang.desafiopitangapi.infra;
 
+import com.pitang.desafiopitangapi.exceptions.InvalidTokenException;
 import jakarta.persistence.EntityNotFoundException;
 import com.pitang.desafiopitangapi.exceptions.BusinessException;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    private ResponseEntity<RestErrorMessage> runtimeExceptionHandler (Exception exception){
+    private ResponseEntity<RestErrorMessage> runtimeExceptionHandler (RuntimeException exception){
+        RestErrorMessage threatResponse = new RestErrorMessage(exception.getMessage(), HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.status(threatResponse.getStatus()).body(threatResponse);
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    private ResponseEntity<RestErrorMessage> runtimeExceptionHandler (InvalidTokenException exception){
         RestErrorMessage threatResponse = new RestErrorMessage(exception.getMessage(), HttpStatus.UNAUTHORIZED);
         return ResponseEntity.status(threatResponse.getStatus()).body(threatResponse);
     }

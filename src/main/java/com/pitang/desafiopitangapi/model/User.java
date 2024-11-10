@@ -1,6 +1,7 @@
 package com.pitang.desafiopitangapi.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.pitang.desafiopitangapi.dto.UserDTO;
 import com.pitang.desafiopitangapi.exceptions.BusinessException;
 import jakarta.persistence.*;
 import lombok.*;
@@ -75,5 +76,20 @@ public class User {
         if (!phone.matches(regex)) {
             throw new BusinessException("Invalid fields", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public static UserDTO toDTO(User user){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setBirthday(user.getBirthday());
+        userDTO.setLogin(user.getLogin());
+        userDTO.setPhone(user.getPhone());
+        userDTO.setCreatedAt(user.getCreatedAt());
+        userDTO.setLastLogin(user.getLastLogin());
+        userDTO.setCars(user.getCars());
+        return userDTO;
     }
 }

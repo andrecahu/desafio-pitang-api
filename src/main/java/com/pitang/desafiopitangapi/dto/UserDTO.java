@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class RegisterRequestDTO {
+public class UserDTO {
 
     private String id;
     private String firstName;
@@ -26,10 +26,11 @@ public class RegisterRequestDTO {
     private String password;
     private String phone;
     private List<Car> cars;
-
+    private LocalDateTime createdAt;
+    private LocalDateTime lastLogin;
     private PasswordEncoder passwordEncoder;
 
-    public static User toEntity(RegisterRequestDTO dto){
+    public static User toEntity(UserDTO dto){
         User user = new User();
         user.setId(dto.getId());
         user.setFirstName(dto.getFirstName());
