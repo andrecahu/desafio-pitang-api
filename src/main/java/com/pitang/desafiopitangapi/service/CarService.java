@@ -29,4 +29,8 @@ public class CarService {
         }
     }
 
+    public void deleteByCar(Car car) {
+        carRepository.delete(car);
+    }
+
 }
