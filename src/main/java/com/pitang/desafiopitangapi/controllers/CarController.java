@@ -38,4 +38,10 @@ public class CarController {
         return ResponseEntity.ok(carService.update(car, request));
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id, HttpServletRequest request) throws BusinessException {
+        carService.delete(id, request);
+        return ResponseEntity.noContent().build();
+    }
+
 }
