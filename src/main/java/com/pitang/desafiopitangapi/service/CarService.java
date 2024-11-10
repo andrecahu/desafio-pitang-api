@@ -65,6 +65,11 @@ public class CarService {
         throw new EntityNotFoundException("Car Not Found");
     }
 
+    public void delete(String id, HttpServletRequest request){
+        Car car = findByIdAndLoggedUser(id, request);
+        carRepository.delete(car);
+    }
+
     public void deleteByCar(Car car) {
         carRepository.delete(car);
     }
