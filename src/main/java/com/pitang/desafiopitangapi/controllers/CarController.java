@@ -32,4 +32,10 @@ public class CarController {
     public ResponseEntity<Car> findById(@PathVariable String id, HttpServletRequest request) throws BusinessException {
         return ResponseEntity.ok(carService.findByIdAndLoggedUser(id, request));
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Car> update(@RequestBody Car car, HttpServletRequest request) throws BusinessException {
+        return ResponseEntity.ok(carService.update(car, request));
+    }
+
 }
