@@ -73,6 +73,12 @@ public class UserService {
         return userDTOs;
     }
 
+    public UserDTO findById(String id){
+        User user = userRepository.findById(id).orElseThrow(() -> new BadCredentialsException("Invalid Id"));
+        return User.toDTO(user);
+    }
+
+
     public UserDTO findByMe(HttpServletRequest request){
         var token = tokenService.recoverToken(request);
         var login = tokenService.verifyToken(token);
@@ -81,7 +87,7 @@ public class UserService {
     }
 
     public UserDTO update(String id, UserDTO userDTO){
-        User user = findById(id);
+        User user = userRepository.findById(id).orElseThrow(() -> new BadCredentialsException("Invalid Id"));
         User newuser = UserDTO.toEntity(userDTO);
         if(newuser.getId() == null)
             newuser.setId(id);
@@ -96,9 +102,4 @@ public class UserService {
         userRepository.save(newuser);
         return User.toDTO(user);
     }
-
-    public User findById(String id){
-        return userRepository.findById(id).orElseThrow(() -> new BadCredentialsException("Invalid id"));
-    }
-
 }
