@@ -14,7 +14,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class UserService {
         this.carService = carService;
     }
 
-    public ResponseDTO register(UserDTO userDTO) throws BusinessException {
+    public UserDTO register(UserDTO userDTO) throws BusinessException {
         if (userRepository.existsByLogin(userDTO.getLogin())) {
             throw new BusinessException("Login already exists", HttpStatus.BAD_REQUEST);
         }
@@ -55,12 +55,11 @@ public class UserService {
                 carService.register(car, null);
             }
         }
-        String token = tokenService.generateToken(newUser);
-        return new ResponseDTO(newUser.getFirstName(), token);
+        return userDTO;
     }
 
     public void updateLastLogin(User user){
-        user.setLastLogin(LocalDateTime.now());
+        user.setLastLogin(LocalDate.now());
         userRepository.save(user);
     }
 

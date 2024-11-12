@@ -1,5 +1,6 @@
 package com.pitang.desafiopitangapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,9 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.pitang.desafiopitangapi.model.Car;
 import com.pitang.desafiopitangapi.model.User;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,14 +22,16 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthday;
     private String login;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String phone;
     private List<Car> cars;
-    private LocalDateTime createdAt;
-    private LocalDateTime lastLogin;
+    private LocalDate createdAt;
+    private LocalDate lastLogin;
     private PasswordEncoder passwordEncoder;
 
     public static User toEntity(UserDTO dto){
@@ -41,7 +45,7 @@ public class UserDTO {
         user.setPassword(dto.getPassword());
         user.setPhone(dto.getPhone());
         if (dto.getCreatedAt() == null)
-            user.setCreatedAt(LocalDateTime.now());
+            user.setCreatedAt(LocalDate.now());
         else
             user.setCreatedAt(dto.getCreatedAt());
         if (dto.getLastLogin() != null)

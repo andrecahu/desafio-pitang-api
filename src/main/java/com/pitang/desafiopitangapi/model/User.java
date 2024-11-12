@@ -1,5 +1,6 @@
 package com.pitang.desafiopitangapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pitang.desafiopitangapi.dto.UserDTO;
 import com.pitang.desafiopitangapi.exceptions.BusinessException;
@@ -7,7 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class User {
     private String email;
 
     @Column(name = "BIRTHDAY", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthday;
 
     @Column(name = "LOGIN", nullable = false)
@@ -43,10 +45,10 @@ public class User {
     private String phone;
 
     @Column(name = "CREATED_AT", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @Column(name = "LAST_LOGIN")
-    private LocalDateTime lastLogin;
+    private LocalDate lastLogin;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference

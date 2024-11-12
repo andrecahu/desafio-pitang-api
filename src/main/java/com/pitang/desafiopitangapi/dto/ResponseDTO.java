@@ -1,4 +1,6 @@
 package com.pitang.desafiopitangapi.dto;
 
-public record ResponseDTO (String name, String token){
+import com.pitang.desafiopitangapi.model.User;
+
+public record ResponseDTO (User user, String token){
 }
