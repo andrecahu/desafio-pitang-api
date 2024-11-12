@@ -6,7 +6,7 @@ Este projeto é uma API RESTful desenvolvida para o Desafio Pitang, que permite 
 ## 💻 Tecnologias Utilizadas
 
 - **Java 21**: JDK utilizada no projeto.
-- **Angular**: Front-end do projeto.
+- **Angular 18**: Front-end do projeto.
 - **Spring Boot**: Framework Java para desenvolvimento de APIs REST.
 - **Spring Security**: Para autenticação e segurança, usando JWT (JSON Web Tokens).
 - **Hibernate / JPA**: Para gerenciamento de banco de dados.
