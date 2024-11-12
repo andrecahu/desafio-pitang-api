@@ -1,5 +1,6 @@
 package com.pitang.desafiopitangapi.controllers;
 
+import com.pitang.desafiopitangapi.infra.RestErrorMessage;
 import com.pitang.desafiopitangapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import com.pitang.desafiopitangapi.dto.LoginRequestDTO;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/signin")
 @RequiredArgsConstructor
-public class AuthController {
+public class SignInController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -32,9 +33,9 @@ public class AuthController {
         if (passwordEncoder.matches(body.password(), user.getPassword())){
             String token = tokenService.generateToken(user);
             userService.updateLastLogin(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getFirstName(), token));
+            return ResponseEntity.ok(new ResponseDTO(user, token));
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login or password");
+        throw new BadCredentialsException("Invalid login or password");
     }
 
 }

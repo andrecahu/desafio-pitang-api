@@ -20,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> register(@RequestBody UserDTO body) throws BusinessException {
+    public ResponseEntity<UserDTO> register(@RequestBody UserDTO body) throws BusinessException {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(body));
     }
 
