@@ -8,7 +8,6 @@ import com.pitang.desafiopitangapi.dto.ResponseDTO;
 import com.pitang.desafiopitangapi.infra.security.TokenService;
 import com.pitang.desafiopitangapi.model.User;
 import com.pitang.desafiopitangapi.repository.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
