@@ -56,7 +56,7 @@ public class CarService {
         car.setUser(user);
 
         for(Car validationCar : user.getCars()){
-            if(validationCar.getId().equals(car.getId())){
+            if(validationCar.getId().equals(id)){
                 if (!validationCar.getLicensePlate().equals(car.getLicensePlate()) && carRepository.existsByLicensePlate(car.getLicensePlate())) {
                     throw new BusinessException("License plate already exists", HttpStatus.BAD_REQUEST);
                 }
