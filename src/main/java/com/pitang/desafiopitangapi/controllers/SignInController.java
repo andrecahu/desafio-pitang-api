@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller responsible for handling user sign-in requests.
+ * Provides an endpoint for user authentication and token generation.
+ */
 @RestController
 @RequestMapping("/signin")
 @RequiredArgsConstructor
@@ -26,6 +30,14 @@ public class SignInController {
     private final TokenService tokenService;
     private final UserService userService;
 
+    /**
+     * Authenticates the user based on the provided login credentials.
+     * If valid, generates a JWT token and updates the user's last login timestamp.
+     *
+     * @param body The login request containing the user's login and password.
+     * @return A {@link ResponseEntity} containing the user details and JWT token.
+     * @throws BadCredentialsException if the login or password is incorrect.
+     */
     @PostMapping()
     public ResponseEntity signIn(@RequestBody LoginRequestDTO body) {
         User user = userRepository.findByLogin(body.login()).orElseThrow(() -> new BadCredentialsException("Invalid login or password"));

@@ -15,6 +15,11 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Data Transfer Object (DTO) for transferring user data.
+ * Used for user registration, updates, and information retrieval.
+ * Includes user details, such as name, email, login, password, phone, and associated cars.
+ */
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class UserDTO {
 
@@ -34,6 +39,12 @@ public class UserDTO {
     private LocalDate lastLogin;
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Converts the UserDTO to a User entity.
+     *
+     * @param dto the UserDTO to be converted
+     * @return a User entity populated with the values from the DTO
+     */
     public static User toEntity(UserDTO dto){
         User user = new User();
         user.setId(dto.getId());
