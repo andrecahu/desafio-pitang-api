@@ -13,10 +13,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
+/**
+ * Security configuration class for the application, setting up authentication,
+ * authorization, CORS filter, and session management policies.
+ *
+ * This class enables Spring Security and configures the necessary security filters
+ * for JWT-based authentication, stateless session policy, and permissions for specific
+ * API endpoints.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -27,6 +32,15 @@ public class SecurityConfig {
     @Autowired
     SecurityFilter securityFilter;
 
+    /**
+     * Configures security filters and authentication policies for the application.
+     * Disables CSRF protection, sets session management to stateless, and defines
+     * authorization rules for various API endpoints.
+     *
+     * @param http the HttpSecurity object used to configure security permissions
+     * @return the Spring Security configuration for HTTP requests
+     * @throws Exception in case of a configuration failure
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -45,11 +59,23 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Provides the password encoder used for hashing passwords in the system.
+     *
+     * @return the BCryptPasswordEncoder instance for password hashing
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configures the AuthenticationManager needed for authenticating users.
+     *
+     * @param authenticationConfiguration Spring's authentication configuration
+     * @return the configured AuthenticationManager
+     * @throws Exception if the configuration fails
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

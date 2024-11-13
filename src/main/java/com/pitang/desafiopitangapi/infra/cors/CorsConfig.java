@@ -2,16 +2,26 @@ package com.pitang.desafiopitangapi.infra.cors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Configuration class for handling Cross-Origin Resource Sharing (CORS) settings.
+ * This class configures CORS to allow the front-end application running on localhost:4200
+ * to interact with the backend.
+ */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
+    /**
+     * Adds CORS mappings for all endpoints, allowing specific origins, methods, and headers.
+     * This method configures CORS at the controller level using Spring's WebMvcConfigurer.
+     *
+     * @param registry the registry that stores CORS configurations for different paths
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -21,12 +31,19 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 
+    /**
+     * Configures CORS using a {@link CorsConfigurationSource} bean.
+     * This configuration is applied globally for all endpoints and allows
+     * requests from the front-end application on localhost:4200.
+     *
+     * @return the CORS configuration source
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:4200"); // Origem do front-end
-        configuration.addAllowedMethod("*"); // Permite todos os métodos: GET, POST, etc.
-        configuration.addAllowedHeader("*"); // Permite todos os headers
+        configuration.addAllowedOrigin("http://localhost:4200");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

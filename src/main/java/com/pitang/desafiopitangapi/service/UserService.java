@@ -18,6 +18,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service class for handling user-related operations such as registration, update, retrieval, and deletion.
+ * It interacts with the {@link UserRepository}, {@link CarService}, and {@link TokenService}.
+ */
 @Service
 public class UserService {
 
@@ -34,6 +38,14 @@ public class UserService {
         this.carService = carService;
     }
 
+    /**
+     * Registers a new user. Validates the user details, checks for duplicate login and email,
+     * encrypts the password, and saves the user to the repository. Also registers any cars associated with the user.
+     *
+     * @param userDTO The user data transfer object containing the user's details.
+     * @return The registered user data transfer object.
+     * @throws BusinessException if the login or email already exists or if the validation fails.
+     */
     public UserDTO register(UserDTO userDTO) throws BusinessException {
         if (userRepository.existsByLogin(userDTO.getLogin())) {
             throw new BusinessException("Login already exists", HttpStatus.BAD_REQUEST);
@@ -43,14 +55,14 @@ public class UserService {
         }
         User newUser = UserDTO.toEntity(userDTO);
         newUser.validate();
-        if(newUser.getCars() != null)
+        if (newUser.getCars() != null)
             carService.validateCarList(newUser.getCars());
 
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         this.userRepository.save(newUser);
 
-        if(newUser.getCars() != null){
-            for(Car car: newUser.getCars()){
+        if (newUser.getCars() != null) {
+            for (Car car : newUser.getCars()) {
                 car.setUser(newUser);
                 carService.register(car, null);
             }
@@ -58,27 +70,49 @@ public class UserService {
         return userDTO;
     }
 
-    public void updateLastLogin(User user){
+    /**
+     * Updates the last login timestamp for a user.
+     *
+     * @param user The user whose last login timestamp will be updated.
+     */
+    public void updateLastLogin(User user) {
         user.setLastLogin(LocalDate.now());
         userRepository.save(user);
     }
 
+    /**
+     * Retrieves all users and returns them as a list of {@link UserDTO}.
+     *
+     * @return A list of all users as data transfer objects.
+     */
     public List<UserDTO> findAll() {
         List<User> users = userRepository.findAll();
         List<UserDTO> userDTOs = new ArrayList<>();
-        for(User user: users){
+        for (User user : users) {
             userDTOs.add(User.toDTO(user));
         }
         return userDTOs;
     }
 
-    public UserDTO findById(String id){
+    /**
+     * Finds a user by their ID and returns their data as a {@link UserDTO}.
+     *
+     * @param id The ID of the user to be retrieved.
+     * @return The user data transfer object.
+     * @throws BadCredentialsException if the user with the specified ID is not found.
+     */
+    public UserDTO findById(String id) {
         User user = userRepository.findById(id).orElseThrow(() -> new BadCredentialsException("Invalid Id"));
         return User.toDTO(user);
     }
 
-
-    public UserDTO findByMe(HttpServletRequest request){
+    /**
+     * Retrieves the currently logged-in user based on the authentication token from the request.
+     *
+     * @param request The HTTP request containing the authentication token.
+     * @return The user data transfer object of the logged-in user.
+     */
+    public UserDTO findByMe(HttpServletRequest request) {
         var token = tokenService.recoverToken(request);
         var login = tokenService.verifyToken(token);
         User user = findByLogin(login);
@@ -87,31 +121,52 @@ public class UserService {
         return userDTO;
     }
 
-    public User findByLogin(String login){
+    /**
+     * Finds a user by their login.
+     *
+     * @param login The login of the user to be retrieved.
+     * @return The user entity.
+     * @throws BadCredentialsException if the user with the specified login is not found.
+     */
+    public User findByLogin(String login) {
         return userRepository.findByLogin(login).orElseThrow(() -> new BadCredentialsException("Invalid login"));
     }
 
-    public UserDTO update(String id, UserDTO userDTO){
+    /**
+     * Updates a user's details based on the provided user ID and user data transfer object.
+     *
+     * @param id The ID of the user to be updated.
+     * @param userDTO The data transfer object containing the updated user details.
+     * @return The updated user data transfer object.
+     * @throws BadCredentialsException if the user with the specified ID is not found.
+     */
+    public UserDTO update(String id, UserDTO userDTO) {
         User user = userRepository.findById(id).orElseThrow(() -> new BadCredentialsException("Invalid Id"));
-        User newuser = UserDTO.toEntity(userDTO);
-        if(newuser.getId() == null)
-            newuser.setId(id);
-        if(newuser.getPassword() == null)
-            newuser.setPassword(user.getPassword());
+        User newUser = UserDTO.toEntity(userDTO);
+        if (newUser.getId() == null)
+            newUser.setId(id);
+        if (newUser.getPassword() == null)
+            newUser.setPassword(user.getPassword());
         if (user.getCars() != null)
-            newuser.setCars(user.getCars());
-        newuser.setCreatedAt(user.getCreatedAt());
-        newuser.setLastLogin(user.getLastLogin());
+            newUser.setCars(user.getCars());
+        newUser.setCreatedAt(user.getCreatedAt());
+        newUser.setLastLogin(user.getLastLogin());
 
-        newuser.validate();
-        userRepository.save(newuser);
+        newUser.validate();
+        userRepository.save(newUser);
         return User.toDTO(user);
     }
 
-    public void delete(String id){
+    /**
+     * Deletes a user based on their ID. Also deletes any associated cars.
+     *
+     * @param id The ID of the user to be deleted.
+     * @throws BadCredentialsException if the user with the specified ID is not found.
+     */
+    public void delete(String id) {
         User user = userRepository.findById(id).orElseThrow(() -> new BadCredentialsException("Invalid Id"));
-        if (user.getCars()!=null){
-            for(Car car: user.getCars()){
+        if (user.getCars() != null) {
+            for (Car car : user.getCars()) {
                 carService.deleteByCar(car);
             }
         }

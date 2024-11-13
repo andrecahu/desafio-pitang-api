@@ -1,7 +1,6 @@
 package com.pitang.desafiopitangapi.infra.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.pitang.desafiopitangapi.exceptions.InvalidTokenException;
 import com.pitang.desafiopitangapi.infra.RestErrorMessage;
 import jakarta.servlet.FilterChain;
@@ -21,6 +20,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collections;
 
+/**
+ * Security filter for handling JWT token-based authentication. Filters every request to verify tokens
+ * and set authentication if the token is valid. If the token is invalid, responds with an error message.
+ */
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
@@ -29,6 +32,17 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * Filters incoming requests to authenticate users based on JWT tokens.
+     * Checks the token in the "Authorization" header, verifies it, and sets user authentication if valid.
+     * If the token is invalid or missing in unauthorized routes, an error response is sent.
+     *
+     * @param request     the HTTP request
+     * @param response    the HTTP response
+     * @param filterChain the filter chain to continue processing the request
+     * @throws ServletException if an exception occurs during filtering
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -52,6 +66,13 @@ public class SecurityFilter extends OncePerRequestFilter {
         }
     }
 
+    /**
+     * Sends an error response in JSON format with a given message and an HTTP 401 Unauthorized status.
+     *
+     * @param response the HTTP response to be sent
+     * @param message  the error message to be included in the response body
+     * @throws IOException if an I/O error occurs during response writing
+     */
     private void sendErrorResponse(HttpServletResponse response, String message) throws IOException {
         RestErrorMessage restErrorMessage = new RestErrorMessage(message, HttpStatus.UNAUTHORIZED);
         String json = new ObjectMapper().writerWithDefaultPrettyPrinter()
@@ -61,6 +82,5 @@ public class SecurityFilter extends OncePerRequestFilter {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
-
     }
 }
