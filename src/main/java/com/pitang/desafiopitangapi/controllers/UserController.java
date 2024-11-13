@@ -4,7 +4,6 @@ import com.pitang.desafiopitangapi.dto.UserDTO;
 import com.pitang.desafiopitangapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 
-import com.pitang.desafiopitangapi.dto.ResponseDTO;
 import com.pitang.desafiopitangapi.exceptions.BusinessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
