@@ -30,18 +30,16 @@ Este projeto é uma API RESTful desenvolvida para o Desafio Pitang, que permite 
     git clone git@github.com:andrecahu/desafio-pitang-api.git
     ```
 
-2. **Acesse o diretório do projeto**:
-    ```bash
-    cd desafio-pitang-api
-    ```
+2. **Abra a ide de preferência** (ex Intellij)
 
-3. **Compile e execute o projeto**:
 
-    ```bash
-    mvn spring-boot:run
-    ```
+3. **Configure o ambiente para utilizar JDK-21** (Recomendo Amazon Corretto 21)
 
-4. **A API estará disponível** no endereço:
+
+4. **Inicie o DesafioPitangApiApplication com o spring**
+
+
+5. **A API estará disponível** no endereço:
     ```
     http://localhost:8080/api
     ```
@@ -154,8 +152,31 @@ O projeto inclui testes unitários para garantir o funcionamento correto das pri
 mvn test
 ```
 
+## 💡 Solução
+Solução técnica implementada para o projeto Desafio Pitang:
 
-## Contato
+1. **Tecnologias 🖥️**  
+* **Java 21** - Aproveitar as melhorias de desempenho  
+* **Spring Boot 3** - Otimizar o processo de configuração e desenvolvimento da aplicação
+* **Angular 18** - Alta performace e escabilidade do projeto. Utilizei o PrimeNG para utilizar os componentes existentes   
+* **JUnit e Mockito** - Para garantir que as funcionalidades da aplicação estejam funcionando conforme esperado
+
+
+2. **Arquitetura em camadas 🗂️**  
+>A ideia é separar as responsabilidades da aplicação em camadas, permitindo maior organização, escalabilidade e manutenção do código.
+
+* **Controllers** - Gerencia a interação entre o cliente (front-end) e o back-end por requisições HTTP  
+* **DTO** - Objetos que transportam dados entre as camadas da aplicação  
+* **Exceptions** - Gerencia erros que ocorrem durante o processamento da aplicação  
+* **Infra** - Fornece serviços de infraestrutura como a segurança da API  
+* **Model** - Contém as entidades que são mapeadas para o banco de dados  
+* **Repository** - Responsável pela comunicação com o banco de dados  
+* **Service** - Camada onde a regra de negócio é implementada
+
+
+
+
+## 💬 Contato
 
 **🙋🏻‍♂️ Autor**: André Cahú Melo  
 **✉️ E-mail**: andrecahu28@gmail.com  
