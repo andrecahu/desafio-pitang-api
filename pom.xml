@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.example</groupId>
     <artifactId>desafio-pitang-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>desafio-pitang-api</name>
     <description>Api do Desafio de Java da Pitang</description>
     <url/>
